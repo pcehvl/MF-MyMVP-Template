@@ -9,8 +9,8 @@
 
 - **Story ID:** US-XXX
 - **Spec:** `product/stories/US-XXX-<slug>/spec.md`
-- **Approved plan:** `.harness/plans/US-XXX-<slug>.md`
-- **Verification evidence:** `.harness/verification/US-XXX-<slug>.md`
+- **Approved plan:** `product/stories/US-XXX-<slug>/plan.md` (`status: approved`)
+- **Verification evidence:** `product/stories/US-XXX-<slug>/verification.md`
 - **Specification revision / hash tested:** <!-- revision or hash -->
 
 ## Implementation Summary
