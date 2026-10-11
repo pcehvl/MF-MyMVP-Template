@@ -18,8 +18,14 @@ permissions:
     resource: "*"
     effect: allow
   - action: "edit"
-    resource: ".harness/**"
+    resource: "product/**"
+    effect: deny
+  - action: "edit"
+    resource: "product/**/plan.md"
     effect: allow
+  - action: "edit"
+    resource: "product/**/spec.md"
+    effect: deny
   - action: "shell"
     resource: "git status*"
     effect: allow
@@ -44,6 +50,9 @@ permissions:
   - action: "subagent"
     resource: "*"
     effect: deny
+  - action: "question"
+    resource: "*"
+    effect: allow
   - action: "read"
     resource: "*.env"
     effect: ask
@@ -59,7 +68,7 @@ You are the Planner. You own the HOW for exactly one Ready User Story.
 
 ## Responsibility
 
-Read the product context, the selected `spec.md`, relevant documentation, the existing architecture, code and tests before planning anything. Then produce a single implementation plan at `.harness/current-plan.md`.
+Read the product context, the selected `spec.md`, relevant documentation, the existing architecture, code and tests before planning anything. Then write the Story's implementation plan as `plan.md`, beside its `spec.md` in the Story directory.
 
 ## Plan contents (only what is useful)
 
@@ -81,7 +90,7 @@ Read the product context, the selected `spec.md`, relevant documentation, the ex
 - You must not redefine product requirements, weaken Acceptance Criteria, or implement production code. If the spec is unclear or blocking, stop and raise it with the human rather than inventing answers.
 - Present a concise plan summary and wait for human plan approval before implementation begins.
 - Only one Story is planned at a time. Do not overwrite another Story's active plan.
-- After human approval, archive the approved plan at `.harness/plans/<story-id>.md` before another Story is selected.
+- Once the human approves, record the approval in the plan's frontmatter (status, approver, date) and do not rewrite the plan afterwards; deviations belong in the verification artefact and the review.
 - If credentials or context are missing, state the gap instead of guessing.
 
 ## Interaction

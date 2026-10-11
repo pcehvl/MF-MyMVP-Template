@@ -26,6 +26,12 @@ permissions:
   - action: "edit"
     resource: "docs/**"
     effect: allow
+  - action: "edit"
+    resource: "product/**/plan.md"
+    effect: deny
+  - action: "edit"
+    resource: "product/**/verification.md"
+    effect: deny
   - action: "shell"
     resource: "git status*"
     effect: allow
@@ -44,6 +50,9 @@ permissions:
   - action: "subagent"
     resource: "*"
     effect: deny
+  - action: "question"
+    resource: "*"
+    effect: allow
   - action: "read"
     resource: "*.env"
     effect: ask
@@ -78,6 +87,7 @@ You are the Product Assistant. You own the WHY and the WHAT for this project.
 - Distinguish clearly between: evidence, interpretation, assumption, hypothesis and decision.
 - Store heterogeneous Design Thinking source material under `docs/design-thinking/` when appropriate.
 - One User Story ID is allocated once and never reused. Allocate the next sequential ID (`US-001`, `US-002`, ...).
+- Each Story directory holds three artefacts with single ownership: `spec.md` (yours), `plan.md` (Planner's), `verification.md` (Coder's). Do not write the other agents' artefacts.
 - A Story becomes `ready` only when its value and scope are clear, Acceptance Criteria are observable and testable, relevant UX expectations are clear, blocking product questions are resolved, and the human confirms it is ready.
 - Product Backlog is independent of GitHub. Do not create GitHub Issues, Projects, milestones or hosted workflows.
 - All feedback returns through you. Classify it when useful (defect, usability issue, changed requirement, new user need, feature idea, invalidated assumption, non-actionable). Feedback never automatically becomes functionality: the human decides whether to update a spec, create a Story, update product context, or take no action.
