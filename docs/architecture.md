@@ -28,8 +28,7 @@ emerges from real requirements; nothing here is speculative product design.
 | `e2e/` | Playwright tests |
 | `supabase/migrations/` | Versioned schema migrations (empty until required) |
 | `supabase/functions/` | Edge Functions (introduced only when justified) |
-| `product/` | Product context and User Story backlog |
-| `.harness/` | Current plan, plan archive, verification evidence |
+| `product/` | Product context and Story backlog; each Story directory holds `spec.md`, `plan.md` and `verification.md` |
 | `.opencode/` | Agents and generic skills |
 | `docs/` | Architecture, UI guidelines, deployment, bootstrap verification |
 
@@ -77,7 +76,7 @@ build → E2E in sequence and stops at the first failure.
 ## Verification flow
 
 ```text
-Story branch → npm run verify → evidence in .harness/verification/<story-id>.md
+Story branch → npm run verify → evidence in the Story's verification.md
 → Pull Request (links spec, approved plan, evidence) → human acceptance → merge
 ```
 

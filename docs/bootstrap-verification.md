@@ -69,7 +69,7 @@ become required checks when the first Story that touches data is implemented.
 |---|---|
 | Supabase migration / RLS verification | Supabase CLI not installed and no remote project linked; human action required (see `docs/deployment.md`) |
 | Deployment | Explicitly out of scope for bootstrap ("Do NOT deploy yet"); no Vercel or Supabase project exists |
-| Remote GitHub operations (push, PR) | Not authorised during bootstrap; repository has no remote |
+| Remote GitHub operations at bootstrap time | Not authorised during bootstrap; completed afterwards as a separate authorised action (see addendum below) |
 
 ## Security checks performed
 
@@ -137,10 +137,58 @@ become required checks when the first Story that touches data is implemented.
 
 ## Local changes versus remote operations
 
-**Local only.** Git repository initialised on `main`; an initial local baseline
-commit establishes `main`. Nothing was pushed, no remote repository was created,
-no Pull Request was opened and no deployment was performed — all require human
-authorisation.
+**Bootstrap itself: local only.** Git repository initialised on `main`; an
+initial local baseline commit established `main`. Nothing was pushed and no
+deployment was performed during bootstrap.
+
+### Addendum — remote established after bootstrap (authorised)
+
+At the Product Owner's explicit request, the GitHub remote was created and the
+verified baseline pushed as a separate, authorised step:
+
+| Item | Value |
+|---|---|
+| Repository | https://github.com/pcehvl/MyMVP |
+| Visibility | private (reversible with `gh repo edit --visibility public`) |
+| Default branch | `main` |
+| Baseline commit | `1af6c2b` — local HEAD and `origin/main` verified identical |
+| Issues | **disabled** (harness forbids Issue-based work tracking) |
+| Projects | **disabled** (harness forbids Projects-based work tracking) |
+| GitHub Actions / workflows | **none created** (0 workflows) |
+| Deployment | still not performed (requires explicit authorisation per target and revision) |
+
+No Pull Request was created: bootstrap is not a User Story, so it carries no
+Story ID, spec or approved plan. All subsequent product work uses one dedicated
+branch and Pull Request per User Story, per `AGENTS.md`.
+
+### Addendum — Story artefact relocation (harness maintenance)
+
+The Product Owner approved relocating per-Story process artefacts so each
+Story directory is a self-contained dossier:
+
+| Artefact | Before | After |
+|---|---|---|
+| Implementation plan | `.harness/current-plan.md` → `.harness/plans/<story-id>.md` | `product/stories/<US-XXX-slug>/plan.md` |
+| Verification evidence | `.harness/verification/<story-id>.md` | `product/stories/<US-XXX-slug>/verification.md` |
+
+`.harness/` was removed entirely: with per-Story plan and evidence files there
+is no remaining purpose for it, and the single active-plan file — a
+coordination point that conflicted under parallel development — no longer
+exists. Plan approval is recorded in the plan's frontmatter
+(`status: draft → approved`, approver, date); the Pull Request pins the
+reviewed revision by commit SHA, so no second archive copy is needed. Story
+artefact ownership is enforced by filename-pattern agent permissions
+(`product/**/spec.md` → Product Assistant, `product/**/plan.md` → Planner,
+`product/**/verification.md` → Coder). This change was made on the
+`chore/story-artefacts` branch through the repository's own Pull Request
+flow.
+
+While updating the permission blocks, a latent defect was found and fixed: the
+three project agents' blanket `deny` rule also blocked the `question` tool,
+which the one-question-at-a-time rule depends on. Each agent now has an
+explicit `question` allow.
+
+References to the old `.harness` paths remain only in this historical record.
 
 ## Reproducibility notes
 
