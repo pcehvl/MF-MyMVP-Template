@@ -60,11 +60,14 @@ requirement justifies.
 Present a concise plan summary to the human and wait for explicit plan approval
 before any implementation begins. Planning is not a licence to build.
 
-## 6. Archive
+## 6. Approval and immutability
 
-After human approval, archive the approved plan in the plans archive for that
-Story before another Story is selected. Keep one active plan at a time; do not
-overwrite another Story's plan.
+Write the plan as the Story's plan artefact, kept alongside its specification.
+
+Once the human approves, record the approval in the plan's status metadata
+(approver and date) and treat the plan as fixed: it is the contract that
+deviations are measured against. Do not keep a second copy elsewhere, and
+never overwrite another Story's plan.
 
 Record deviations from the approved plan during implementation; meaningful
 deviations must be documented in the verification evidence and the review.
