@@ -14,7 +14,7 @@ Exactly three project agents exist (`.opencode/agents/`):
 | Agent | Owns | Must not |
 |---|---|---|
 | Product Assistant | WHY / WHAT: framing, `product/product.md`, backlog, Story IDs, `spec.md`, priority, Acceptance Criteria, refinement, feedback, traceability | implement code, write technical plans |
-| Planner | HOW: the implementation plan for exactly one Ready Story, at `.harness/current-plan.md` | redefine requirements, implement production code |
+| Planner | HOW: the implementation plan for exactly one Ready Story, in the Story's `plan.md` | redefine requirements, implement production code |
 | Coder | BUILD / VERIFY: dedicated branch, implementation, local tests, evidence, Pull Request, deployment when authorised | redefine requirements, expand scope silently, merge without explicit acceptance |
 
 ## Loops
@@ -42,9 +42,8 @@ and Pull Requests.
 | Product context | `product/product.md` |
 | Product Backlog | `product/stories/` |
 | Story requirements | `product/stories/<US-XXX-slug>/spec.md` |
-| Current implementation plan | `.harness/current-plan.md` |
-| Approved plan archive | `.harness/plans/<story-id>.md` |
-| Verification evidence | `.harness/verification/<story-id>.md` |
+| Implementation plan | `product/stories/<US-XXX-slug>/plan.md` (`status: draft` → `approved`) |
+| Verification evidence | `product/stories/<US-XXX-slug>/verification.md` |
 | Implementation | Git feature branch |
 | Database evolution | `supabase/migrations/` |
 | Integration / review | GitHub Pull Request (`.github/pull_request_template.md`) |
@@ -52,6 +51,14 @@ and Pull Requests.
 Do not create competing sources of truth. Do not create a `backlog.md`. Do not
 use GitHub Issues, Projects, milestones or GitHub Actions as part of this
 harness.
+
+**Story artefacts.** Each Story directory is a complete dossier with single
+ownership per artefact, enforced by agent permissions on the artefact filename:
+`spec.md` (Product Assistant), `plan.md` (Planner), `verification.md` (Coder).
+The plan carries `status: draft` until the human approves it; approval is
+recorded in its frontmatter (approver, date) and the Pull Request pins the
+reviewed revision by commit SHA — there is no separate plan archive. Never
+write another Story's artefacts.
 
 ## Rules that apply to every agent
 
@@ -121,9 +128,7 @@ Story ID → branch feature/<story-id>-<slug> or fix/<story-id>-<slug>
 - Check for an existing branch and PR for the Story before creating them;
   resume rather than duplicate. A merged Story stays done; a later change needs
   a new Story ID.
-- PRs reference the spec path, the approved plan and
-  `.harness/verification/<story-id>.md`. No Issue references, Issue-derived
-  branch names or automatic closing keywords.
+- PRs reference the Story's `spec.md`, its `plan.md` with `status: approved`, and its `verification.md`. No Issue references, Issue-derived branch names or automatic closing keywords.
 
 ## Local verification
 
@@ -133,7 +138,7 @@ Run before presenting a PR for acceptance and again before merge:
 npm run verify   # lint → typecheck → unit/component tests → build → E2E
 ```
 
-Record evidence in `.harness/verification/<story-id>.md`: story ID and spec
+Record evidence in the Story's `verification.md`: story ID and spec
 revision, tested source commit, environment, per-check PASS/FAIL/NOT RUN,
 Acceptance Criterion-to-evidence mapping, limitations and reasons for anything
 not run. Failed or missing required checks block acceptance and merge unless the

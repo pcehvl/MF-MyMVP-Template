@@ -1,4 +1,4 @@
-# MF-MyMVP
+# MyMVP
 
 AI-assisted MVP development harness built on OpenCode. This repository is the
 **harness**, not the product: it defines how product work and implementation
@@ -60,8 +60,7 @@ credentials.
 
 | Path | Purpose |
 |---|---|
-| `product/` | Product context and User Story backlog (Product Assistant) |
-| `.harness/` | Current plan, plan archive, verification evidence |
+| `product/` | Product context and Story backlog (Product Assistant); each Story directory holds `spec.md`, `plan.md`, `verification.md` |
 | `.opencode/` | Project agents and generic skills |
 | `docs/` | Architecture, UI guidelines, deployment, bootstrap verification |
 | `supabase/` | Migrations and Edge Functions |
