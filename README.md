@@ -1,4 +1,4 @@
-# StudyMatch
+# MF-MyMVP
 
 AI-assisted MVP development harness built on OpenCode. This repository is the
 **harness**, not the product: it defines how product work and implementation
