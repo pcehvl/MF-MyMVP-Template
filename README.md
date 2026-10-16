@@ -20,7 +20,8 @@ Ready Story → Plan → Human Plan Approval → Feature Branch → Implement �
 → Product Loop
 ```
 
-Three project agents (`.opencode/agents/`) carry the work: Product Assistant
+You work in OpenCode's built-in Build agent. It delegates to three project agents
+(`.opencode/agents/`) that carry the work: Product Assistant
 (WHY/WHAT), Planner (HOW), Coder (BUILD/VERIFY). Six generic skills
 (`.opencode/skills/`) describe the reusable methods. `AGENTS.md` binds them to
 this repository.
