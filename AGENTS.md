@@ -9,7 +9,9 @@ the skills; do not duplicate it here.
 The human is the **Product Owner**. The human owns product vision, scope,
 priority, important product decisions and final acceptance.
 
-Exactly three project agents exist (`.opencode/agents/`):
+Work always starts in OpenCode's built-in **Build** agent, which delegates to exactly
+three project agents (`.opencode/agents/`). Do not select the project agents
+directly: as subagents they have narrow permissions.
 
 | Agent | Owns | Must not |
 |---|---|---|
