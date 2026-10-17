@@ -19,11 +19,11 @@
 
 ## Acceptance Criteria Verification
 
-<!-- Map every Acceptance Criterion from spec.md to its result and evidence. -->
+<!-- One row per criterion, by its ACn ID from spec.md. Never by position; do not restate the criterion text. -->
 
-| # | Acceptance Criterion | Result | Evidence |
-|---|----------------------|--------|----------|
-| 1 | ... | PASS / FAIL | ... |
+| AC | Short Title | Result | Evidence |
+|----|-------------|--------|----------|
+| AC1 | ... | PASS / FAIL | ... |
 
 ## Local Verification
 
