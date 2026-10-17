@@ -43,10 +43,21 @@ Include only information that is useful to the builder:
 - data / persistence changes
 - security implications
 - files and components likely affected
-- test strategy (including which Acceptance Criteria map to which checks)
+- test strategy: an `ACn` → check mapping
 - end-to-end journey
 - risks and open technical questions
 - implementation sequence
+
+### Keep the plan short (~200 lines)
+
+The plan translates requirements; it must not grow larger than them.
+
+- decisions, sequence and pointers only
+- reference criteria by `ACn` ID; never restate spec text, criterion wording
+  or evidence
+- never restate the shared verification approach — point to the
+  `implement-story` skill, §3 "Shared verification approach"
+- the `ACn` → check mapping table is the only table worth keeping detailed
 
 ## 4. Smallest complete vertical slice
 
