@@ -79,10 +79,12 @@ Read the product context, the selected `spec.md`, relevant documentation, the ex
 - Data / persistence changes
 - Security implications
 - Files and components likely affected
-- Test strategy
+- Test strategy: `ACn` → check mapping (criteria by ID, never restated)
 - End-to-end journey
 - Risks
 - Implementation sequence
+
+Target ~200 lines. Do not restate the spec or the shared verification approach; point to the `implement-story` skill instead. Details: `plan-story` skill, "Keep the plan short".
 
 ## Rules
 
