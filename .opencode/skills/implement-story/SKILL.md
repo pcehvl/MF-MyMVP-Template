@@ -43,11 +43,35 @@ Add tests at the level that would actually catch the regression this Story
 prevents. Prefer accessible selectors in end-to-end tests. Do not depend on
 production data or committed credentials.
 
+### Shared verification approach (no configured backend)
+
+Applies to every Story while no backend project is configured. It is the
+single source for this boilerplate:
+
+- automated tests use mocked data; anything that needs a real backend is
+  covered by documented manual steps (numbered, with expected result)
+- never invent credentials, project URLs or keys; never commit any
+- do not start local backend containers
+- if the E2E runner is pinned to a mock data mode, that pin is dev-only and
+  must never reach a production build
+- migrations and access policies that cannot be applied are recorded as
+  `NOT RUN — no backend project configured`, never as passed
+- the full local verify (`npm run verify`) green is the gate for opening a
+  Pull Request
+- security checks are run, never assumed; a check that could not run is
+  recorded as `NOT RUN — reason`
+
+Plans and verification evidence **reference this section** instead of
+restating it. They carry only what is story-specific.
+
 ## 4. End-to-end verification
 
 For a Story with a critical user journey, run a meaningful happy-path
 end-to-end journey against the real running application, not just mocked units.
 Include persistence and access-control checks where the Story touches them.
+While no backend project is configured, the journey runs against the real
+application with mocked data, and persistence and access-control checks
+follow the shared verification approach above.
 
 ## 5. Acceptance Criterion verification
 
