@@ -1,29 +1,34 @@
 ---
 name: Implement Story
-description: Implement one approved plan as the smallest complete vertical slice, verify it end to end against every Acceptance Criterion, and prepare it for integration
+description: Implement PLAN-AGENT / PR-tracked work as the smallest complete vertical slice, verify it by risk (and against every Acceptance Criterion when they exist), and prepare it for integration
 ---
 
 # Implement Story
 
-Generic method for building one Story after its plan has been human-approved.
+Generic method for building PLAN-AGENT and PR-tracked work. FAST and
+PLAN-LITE work need only §2 (vertical slice), §3 (risk-based verification,
+tiers in `AGENTS.md`) and §6 (self-review), and report per §7.
 Generated code alone is never "done".
 
 ## 1. Preconditions
 
-Confirm before writing code:
+For PR-tracked (dossier) Stories, confirm before writing code:
 
 - exactly one Story is being implemented
 - the plan for that Story has explicit human approval
 - the specification revision matches the one the plan was approved against
 - work happens on a dedicated branch for that Story, never on the integration branch
 
+For PLAN-AGENT work that is not PR-tracked, confirm the Planner's plan is in
+hand and implement from it without repeating its analysis.
+
 If any precondition fails, stop and raise it. Do not start another Story
 automatically.
 
 ## 2. Smallest complete vertical slice
 
-Implement the smallest slice that satisfies the Story end to end across UI,
-logic, persistence and tests. Follow the approved plan.
+Implement the smallest slice that satisfies the requirement end to end across
+UI, logic, persistence and tests. Follow the plan when there is one.
 
 Do not: expand scope silently, weaken criteria, implement unrelated work, add
 speculative abstractions, or change the specification to make implementation
@@ -31,7 +36,10 @@ easier. Route requirement problems back to the product loop.
 
 ## 3. Automated verification
 
-Verify from the cheapest useful level upward:
+Run the checks required for the mode (`AGENTS.md`, "Risk-based
+verification"); auth, RLS, data-access and schema changes always get the full
+pipeline plus an explicit security review. Verify from the cheapest useful
+level upward:
 
 ```text
 logic → unit tests
@@ -75,7 +83,8 @@ follow the shared verification approach above.
 
 ## 5. Acceptance Criterion verification
 
-Explicitly verify every Acceptance Criterion and record, per criterion:
+When Acceptance Criteria exist (in a spec or in the conversation), explicitly
+verify every one and record, per criterion:
 
 - the check that was run
 - the result (pass / fail)
@@ -101,14 +110,18 @@ Self-review supplies technical evidence. It is not human acceptance.
 
 ## 7. Ready for integration
 
-Before requesting review:
+For PR-tracked work, before requesting review:
 
-- record verification evidence in the Story's verification artefact, including
+- record verification evidence in the Story's `verification.md`, including
   the tested source commit, environment, timestamp and per-check results
 - note plan deviations and known limitations honestly
 - confirm which required checks were not run and why
 - prepare the review request referencing the specification, the approved plan
   and the local evidence
+
+For FAST and PLAN-LITE work (and PLAN-AGENT work that is not PR-tracked),
+report the same information concisely in the conversation instead: what
+changed, per-check results, checks not run and why, and known limitations.
 
 If code or the specification changes after verification, rerun the affected
 checks and obtain renewed acceptance before merge.
