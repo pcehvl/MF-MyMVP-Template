@@ -1,89 +1,65 @@
 ---
 name: Plan Story
-description: Turn one refined, Ready User Story into a technically actionable implementation plan after inspecting the existing system
+description: Inspect the existing system and return a concise implementation plan (normally ≤200 words) for PLAN-AGENT work; write a plan document only on explicit request
 ---
 
 # Plan Story
 
-Generic method for planning the implementation of exactly one Ready User Story.
-The plan is written for a builder who has not read the conversation.
+Generic method for planning PLAN-AGENT work. The plan exists to reduce total
+implementation time, not to produce documentation. It is written for a
+builder who will implement from it without repeating the analysis.
 
-## 1. Preconditions
+## 1. Inspect the existing system first
 
-Before planning, confirm:
+Read, before recommending anything:
 
-- the Story is `ready` (value, scope, Acceptance Criteria and UX expectations are clear)
-- the specification is the current revision, and record its revision or content hash
-- no other Story is currently in flight (one Story at a time)
-
-If the spec is unclear, blocking questions exist, or the Story is not ready, stop
-and raise that with the human instead of planning around it.
-
-## 2. Inspect the existing system first
-
-Read, before writing the plan:
-
-- product context relevant to the Story
-- the Story's specification
+- the requirement (conversation, or the Story's specification when one exists)
 - existing architecture and conventions
-- existing code and components that the Story touches
+- existing code and components the change touches
 - existing tests and test conventions
-- any relevant migrations or configuration
+- relevant migrations and configuration
 
-Plan from what exists, not from what you assume exists.
+Plan from what exists, not from what you assume exists. If the requirement is
+unclear or blocking, stop and raise it instead of planning around it.
 
-## 3. Plan contents
+## 2. Plan contents
 
-Include only information that is useful to the builder:
+Return the plan in the reply, normally within 200 words, containing exactly:
 
-- Story ID, title, spec path and specification revision or content hash
-- existing-system impact
-- implementation approach
-- UI changes
-- data / persistence changes
-- security implications
-- files and components likely affected
-- test strategy: an `ACn` → check mapping
-- end-to-end journey
-- risks and open technical questions
-- implementation sequence
+1. recommended approach
+2. existing components/patterns to reuse
+3. specific files/modules to modify
+4. required frontend/backend/database changes
+5. important dependencies and risks
+6. essential verification steps
 
-### Keep the plan short (~200 lines)
+Reference Acceptance Criteria by `ACn` ID; never restate spec text,
+criterion wording or evidence. Never restate the shared verification
+approach — point to the `implement-story` skill, §3 "Shared verification
+approach".
 
-The plan translates requirements; it must not grow larger than them.
+## 3. Smallest complete vertical slice
 
-- decisions, sequence and pointers only
-- reference criteria by `ACn` ID; never restate spec text, criterion wording
-  or evidence
-- never restate the shared verification approach — point to the
-  `implement-story` skill, §3 "Shared verification approach"
-- the `ACn` → check mapping table is the only table worth keeping detailed
+Prefer the smallest complete vertical slice that satisfies the requirement end
+to end (UI, logic, persistence, tests) over a broad partial implementation.
+Avoid speculative architecture, unnecessary abstractions, extra layers and
+infrastructure that no current requirement justifies.
 
-## 4. Smallest complete vertical slice
+## 4. Planning documents (only on explicit request)
 
-Prefer the smallest complete vertical slice that satisfies the Story end to end
-(UI, logic, persistence, tests) over a broad partial implementation. Avoid
-speculative abstractions, unnecessary layers and infrastructure that no current
-requirement justifies.
+Do not create planning documents by default. When the human explicitly asks
+for one for the full dossier flow:
 
-## 5. Present and wait
+- write it as the Story's `plan.md`, beside its `spec.md`, equally concise
+- record the specification revision or content hash it was planned against
+- keep `status: draft` and present a concise summary; wait for explicit human
+  approval before implementation begins
+- on approval, record approver and date in its frontmatter; the plan is then
+  immutable — deviations go in the verification evidence and the review
+- only one dossier Story is planned at a time; never overwrite another
+  Story's plan, and keep no second copy elsewhere
 
-Present a concise plan summary to the human and wait for explicit plan approval
-before any implementation begins. Planning is not a licence to build.
-
-## 6. Approval and immutability
-
-Write the plan as the Story's plan artefact, kept alongside its specification.
-
-Once the human approves, record the approval in the plan's status metadata
-(approver and date) and treat the plan as fixed: it is the contract that
-deviations are measured against. Do not keep a second copy elsewhere, and
-never overwrite another Story's plan.
-
-Record deviations from the approved plan during implementation; meaningful
-deviations must be documented in the verification evidence and the review.
-
-## 7. Boundaries
+## 5. Boundaries
 
 - Do not redefine product requirements, weaken Acceptance Criteria or expand
   scope while planning. If the requirement is wrong, route it back to the
