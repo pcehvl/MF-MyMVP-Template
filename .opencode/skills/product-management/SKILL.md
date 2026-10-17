@@ -105,7 +105,21 @@ Every Acceptance Criterion must be:
 - free of hidden implementation detail
 
 Bad: "The system uses efficient queries."
-Good: "When a list request returns no records, the empty state is shown with an explanation and a next step."
+Good: "- **AC1 — Empty list explained.** When a list request returns no records, the empty state is shown with an explanation and a next step."
+
+### Numbering contract
+
+Every criterion carries a stable ID from the moment it is written:
+
+- format: `- **ACn — Short Title.** <criterion text>`
+- `AC1 … ACn` are sequential in the order written; the Short Title is 3–7
+  descriptive words
+- all other artefacts (plan, verification evidence, Pull Request) reference
+  criteria by `ACn` ID — never by bullet position, and never by restating the
+  criterion text
+- once a Story's plan is approved, its criteria are never renumbered and no
+  criterion is inserted without the human; any such change requires
+  re-checking every existing `ACn` reference in the plan and verification
 
 ## 7. Prioritisation
 
